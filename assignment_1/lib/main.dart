@@ -42,13 +42,13 @@ class MyApp extends StatelessWidget {
                     width: 100.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      color: Colors.orange,
+                      color: Colors.amber,
                       border: Border.all(
                         color: Colors.black,
                         width: 3.0
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Container 1',
                     ),
                   ),
@@ -56,22 +56,21 @@ class MyApp extends StatelessWidget {
                 Expanded(
                   flex: 0,
                   child: Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       left: 10,
                       right: 10,
                     ),
-
                     child: Transform.rotate(
                       angle: pi/4,
                       child: Container(
                         alignment: Alignment.center,
                         height: 100.0,
                         width: 100.0,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.rectangle,
                           color: Colors.white,
                         ),
-                        child: Text(
+                        child: const Text(
                           'Container 2'
                         ),
                       ),
@@ -94,7 +93,7 @@ class MyApp extends StatelessWidget {
                         shape: BoxShape.rectangle,
                         color: Colors.yellow,
                       ),
-                      child: Text(
+                      child: const Text(
                         'Container 3',
                         style: TextStyle(
                           color: Colors.black,
@@ -116,7 +115,7 @@ class MyApp extends StatelessWidget {
                         shape: BoxShape.rectangle,
                         color: Colors.blue,
                       ),
-                      child: Text(
+                      child: const Text(
                         'Container 4',
                         style: TextStyle(
                           color: Colors.black,
@@ -145,7 +144,7 @@ class MyApp extends StatelessWidget {
                           color: Colors.white,
                           width: 3.0,),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Container 5',
                         style: TextStyle(
                           color: Colors.white,
@@ -156,15 +155,16 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 Expanded(
+                  flex: 1,
                   child: Container(
                     alignment: Alignment.topLeft,
                     height: 100.0,
                     width: 100.0,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.rectangle,
                       color: Colors.red,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Con 6',
                       style: TextStyle(
                         color: Colors.black,
