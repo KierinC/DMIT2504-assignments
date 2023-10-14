@@ -18,7 +18,7 @@ class MyFirstPage extends StatefulWidget {
 class MyFirstPageState extends State<MyFirstPage> {
   bool _enabled = false;
   int _timesClicked = 0;
-  String _msg1 = '';
+  String _msg1 = 'Click Me';
   String _msg2 = '';
 
   @override
@@ -29,18 +29,54 @@ class MyFirstPageState extends State<MyFirstPage> {
       ),
       body: Column(
         children: <Widget>[
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               //TODO: Build the label and switch here
               //as children of the row.
+              const Text('Enable Buttons'),
+              Switch(
+                value: _enabled,
+                onChanged: (bool onChangedValue) {
+                  _enabled = onChangedValue;
+                  setState(() {
+                    if (_enabled) {
+                      _timesClicked = 0;
+                      _msg1 = 'Click Me';
+                    }
+                  });
+                }
+              )
             ],
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               //TODO: Build the two buttons here
               //as children of the row.
+              Visibility(
+                visible: _enabled,
+                child: ElevatedButton(
+                  onPressed: () {
+                        setState(() {
+                          _timesClicked++;
+                          _msg1 = 'Clicked $_timesClicked';
+                        });
+                      },
+                  child: Text(_msg1)
+                ),
+              ),
+              Visibility(
+                visible: _enabled,
+                child: ElevatedButton(
+                  onPressed: () {
+                        setState(() {
+                          
+                        });
+                  },
+                  child: const Text('Reset')
+                )
+              ),
             ],
           ),
           const SizedBox(
@@ -54,6 +90,38 @@ class MyFirstPageState extends State<MyFirstPage> {
                 children: [
                   //TODO: Build the text form field here as the first
                   //child of the column.
+                  TextFormField(
+                    controller: textEditingController,
+                    onChanged: (value) {
+                      print(value);
+                    },
+                    onFieldSubmitted: (text) {
+                      print('Submitted Text = $text');
+                      if (formKey.currentState!.validate()) {
+                        print('the input is now valid');
+                      }
+                    },
+                    validator: (input) {
+                      if (input!.length > 1 && input.length < 10) {
+                        return input;
+                      } else {
+                        return '';
+                      }
+                    },
+                    onSaved: (input) {
+                      print('onSaved = $input');
+                      firstName = input.toString();
+                    },
+                    maxLength: 20,
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.emoji_emotions),
+                      labelText: 'First Name',
+                      helperText: 'min 1, max 10',
+                      suffixIcon: Icon(
+                        Icons.check_circle,
+                      ),
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -78,6 +146,6 @@ class SnackbarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO: Build the submit button and snackbar here by
     //replacing this Text widget with what is necessary.
-    return const Text('hi');
+    return Text('');
   }
 }
