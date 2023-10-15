@@ -3,6 +3,8 @@
 
 // ignore_for_file: use_key_in_widget_constructors, file_names, todo, unused_field, unused_import, prefer_final_fields
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:assignment_2/themes/theme.dart';
 
@@ -39,12 +41,7 @@ class MyFirstPageState extends State<MyFirstPage> {
                 value: _enabled,
                 onChanged: (bool onChangedValue) {
                   _enabled = onChangedValue;
-                  setState(() {
-                    if (_enabled) {
-                      _timesClicked = 0;
-                      _msg1 = 'Click Me';
-                    }
-                  });
+                  setState(() {});
                 }
               )
             ],
@@ -71,7 +68,8 @@ class MyFirstPageState extends State<MyFirstPage> {
                 child: ElevatedButton(
                   onPressed: () {
                         setState(() {
-                          
+                          _timesClicked = 0;
+                          _msg1 = 'Click Me';
                         });
                   },
                   child: const Text('Reset')
@@ -93,26 +91,22 @@ class MyFirstPageState extends State<MyFirstPage> {
                   TextFormField(
                     controller: textEditingController,
                     onChanged: (value) {
-                      print(value);
                     },
                     onFieldSubmitted: (text) {
-                      print('Submitted Text = $text');
+                      print('submitted $text');
                       if (formKey.currentState!.validate()) {
-                        print('the input is now valid');
+                        print('validated');
                       }
                     },
-                    validator: (input) {
-                      if (input!.length > 1 && input.length < 10) {
-                        return input;
-                      } else {
-                        return '';
-                      }
+                    validator: (value){
+                      return value!.isEmpty || value.length > 10 ? 'Name must be between 1 and 10 characters' : null;
                     },
                     onSaved: (input) {
-                      print('onSaved = $input');
                       firstName = input.toString();
+                      print('onSaved activated $firstName');
+                      setState(() {});
                     },
-                    maxLength: 20,
+                    maxLength: 10,
                     decoration: const InputDecoration(
                       icon: Icon(Icons.emoji_emotions),
                       labelText: 'First Name',
@@ -146,6 +140,34 @@ class SnackbarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO: Build the submit button and snackbar here by
     //replacing this Text widget with what is necessary.
-    return Text('');
+    return ElevatedButton(
+      onPressed: () {
+        if (formKey.currentState!.validate()) {
+          formKey.currentState!.save();
+          dynamic snackBar = SnackBar(
+            behavior: SnackBarBehavior.floating,
+            duration: const Duration(seconds: 5),
+            content: Row(
+              children: [
+                const Icon(Icons.favorite),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text('Hey There, Your name is $firstName'),
+              ],
+            ),
+            action: SnackBarAction(
+              label: 'Click Me',
+              onPressed: () {
+                print('snackbar clicked');
+              },
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+        
+      },
+      child: const Text('Submit'),
+    );
   }
 }
