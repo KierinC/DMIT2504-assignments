@@ -81,6 +81,11 @@ class SQFliteDbService {
       //Also specify the conflictAlgorithm. 
       //In this case, if the same stock is inserted
       //multiple times, it replaces the previous data.
+      await db.insert(
+        'stocks',
+        stock.toMap(),
+        conflictAlgorithm: sqflitePackage.ConflictAlgorithm.replace,
+      );
       
     } catch (e) {
       print('SQFliteDbService insertStock: $e');
@@ -91,6 +96,12 @@ class SQFliteDbService {
     try {
       //TODO: 
       //Put code here to update stock info.
+      await db.update(
+        'stocks',
+        stock.toMap(),
+        where: "id = ?",
+        whereArgs: [stock.symbol],
+      );
       
     } catch (e) {
       print('SQFliteDbService updateStock: $e');
@@ -101,6 +112,11 @@ class SQFliteDbService {
     try {
       //TODO: 
       //Put code here to delete a stock from the database.
+      await db.delete(
+        'stocks',
+        where: "id = ?",
+        whereArgs: [stock.symbol],
+      );
       
     } catch (e) {
       print('SQFliteDbService deleteStock: $e');
