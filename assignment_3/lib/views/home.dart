@@ -116,6 +116,23 @@ class HomeViewState extends State<HomeView> {
                       //attach them to _stockList,
                       //then print all stocks to the console and,
                       //finally call setstate at the end.
+                      var companyData = await _stockService.getCompanyInfo(symbol);
+                      var stockData = await _stockService.getQuote(symbol);
+
+                      if (companyData != null && stockData != null) {
+                        symbol = companyData['Symbol'];
+                        companyName = companyData['Name'];
+                        price = stockData['Global Quote']['05. price'];
+                        var stock = Stock(
+                          symbol: symbol,
+                          name: companyName,
+                          price: price,
+                        );
+                        await _databaseService.insertStock(stock);
+                        _stockList = await _databaseService.getAllStocksFromDb();
+                        await _databaseService.printAllStocksInDbToConsole();
+                        setState(() {});
+                      }
                       
                     } catch (e) {
                       print('HomeView _inputStock catch: $e');
