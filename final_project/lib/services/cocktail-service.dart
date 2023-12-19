@@ -45,7 +45,7 @@ class CocktailService {
     return data['drinks'];
   }
 
-Future getCocktailByIngredient(String ingredient) async {
+  Future getCocktailByIngredient(String ingredient) async {
     Uri url = Uri(
       scheme: 'https',
       host: 'www.thecocktaildb.com',
